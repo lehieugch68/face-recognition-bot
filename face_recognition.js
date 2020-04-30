@@ -11,7 +11,7 @@ const genderTrans = {"Nam": "male", "Nữ": "female"};
 
 process.on('message', async function(msg) {
 	await faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL); 
-	await faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL);
+	//await faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL);
 	await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL);
 	await faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL);
 	await faceapi.nets.faceExpressionNet.loadFromDisk(MODEL_URL);
