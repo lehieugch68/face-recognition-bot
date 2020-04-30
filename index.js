@@ -4,7 +4,7 @@ var childProcess = require('child_process');
 
 const client = new Discord.Client();
 
-client.once('ready', async () =>{
+client.once('ready', () =>{
 	console.log('Ready!');
 })
 
