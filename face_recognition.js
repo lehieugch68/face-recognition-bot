@@ -25,7 +25,6 @@ process.on('message', async function(msg) {
 		faceapi.matchDimensions(img, displaySize);
 		const resizedDetections = faceapi.resizeResults(results, displaySize);
 		faceapi.draw.drawDetections(out, resizedDetections);
-		const box = resizedDetections.detection.box;
 		let gender = Object.keys(genderTrans).find(key => genderTrans[key] === resizedDetections.gender);
 		let age = Math.abs(Math.round(resizedDetections.age));
 		let expressions = resizedDetections['expressions'];
