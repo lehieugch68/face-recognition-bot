@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { PREFIX, TOKEN } = require('.config.json');
+const { PREFIX, TOKEN } = require('./config.json');
 var childProcess = require('child_process');
 
 const client = new Discord.Client();
