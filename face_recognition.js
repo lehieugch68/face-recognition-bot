@@ -3,7 +3,7 @@ const faceapi = require("face-api.js");
 const canvas = require("canvas");
 const { Canvas, Image, ImageData } = canvas; 
 faceapi.env.monkeyPatch({ Canvas, Image, ImageData });
-faceapi.tf.getBackend();
+//faceapi.tf.getBackend();
 const MODEL_URL = "./models";
 
 const expressionTrans = {"Bình thường": "neutral", "Vui mừng": "happy", "Buồn bã": "sad", "Tức giận": "angry", "Sợ hãi": "fearful", "Ghê tởm": "disgusted", "Bất ngờ": "surprised"};
