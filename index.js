@@ -14,7 +14,7 @@ client.on('message', async msg => {
 	if (msg.author.bot) return;
 	if (msg.content.startsWith(PREFIX)) {
 		const args = msg.content.slice(PREFIX.length).split(/ +/);
-		const command = args[0];
+		const command = args[0].toLowerCase();;
 		if (command === 'face') {
 			let url = (msg.mentions.members.first()) ? msg.mentions.members.first().user.avatarURL({format: 'png'}) : ((msg.attachments.size > 0) ? msg.attachments.first().url : args.join("").trim());
 			var child = childProcess.fork('./face_recognition.js');
