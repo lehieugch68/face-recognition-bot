@@ -1,33 +1,33 @@
-const Discord = require('discord.js');
 const { PREFIX, TOKEN } = require('./config.json');
-var childProcess = require('child_process');
-
+const Discord = require('discord.js');
 const client = new Discord.Client();
+client.commands = new Discord.Collection();
+const fs = require('fs');
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
+}
 
 client.once('ready', () =>{
-	console.log('Ready!');
-})
-
-client.login(TOKEN)
+	console.log("Ready!");
+});
 
 client.on('message', async msg => {
-	if (msg.author.bot) return;
-	if (msg.content.startsWith(PREFIX)) {
-		const args = msg.content.slice(PREFIX.length).split(/ +/);
-		const command = args[0].toLowerCase();;
-		if (command === 'face') {
-			let url = (msg.mentions.members.first()) ? msg.mentions.members.first().user.avatarURL({format: 'png'}) : ((msg.attachments.size > 0) ? msg.attachments.first().url : args.join("").trim());
-			var child = childProcess.fork('./face_recognition.js');
-			child.send(url);
-			child.on('message', function(message) {
-				if (!message.error) {
-					msg.reply(message.result, {files:[{attachment: Buffer.from(message.buffer, 'utf8'), name: `${msg.author.id}.png`}]});
-				} else {
-					msg.reply(`Lỗi: \`${message.errmsg}\``);
-				}
-				child.kill();
-				return
-			});
+	if (msg.author == client.user) return;
+	if (msg.content.toLowerCase().startsWith(PREFIX) && !msg.author.bot)
+	{
+		const args = msg.content.slice(PREFIX.length).replace(/\n/g, ' \n').split(/ +/);
+		const commandName = args.shift().toLowerCase().trim();
+		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		if (command == null) return;
+		try {
+			command.execute(msg, args);
+		} catch (error) {
+			return msg.reply(`Xảy ra lỗi khi thực hiện lệnh này:\n\`${error.message}\``);
 		}
 	}
 })
+
+client.login(TOKEN)
