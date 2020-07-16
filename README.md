@@ -6,7 +6,7 @@ Yêu cầu: [discord.js](https://github.com/discordjs/discord.js/), [face-api.js
 
 ```
 npm install discord.js
-npm install tensorflow@tfjs-node
+npm install tensorflow@tfjs-node (không bắt buộc)
 npm install face-api.js
 npm install canvas
 ```
