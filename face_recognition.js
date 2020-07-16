@@ -11,8 +11,8 @@ const genderName = {"Nam": "male", "Nữ": "female"};
 
 Promise.all([
 	faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL),
-	faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL),
-	//faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL),
+	//faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL),
+	faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL),
 	faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL),
 	faceapi.nets.faceExpressionNet.loadFromDisk(MODEL_URL),
 	faceapi.nets.ageGenderNet.loadFromDisk(MODEL_URL),
@@ -26,7 +26,7 @@ let analysis = (url) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let img = await canvas.loadImage(url);
-			let results = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender();
+			let results = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceExpressions().withAgeAndGender();
 			if (!results) return reject({error: true, message: "Không tìm thấy khuôn mặt nào cả!"});
 			const out = faceapi.createCanvasFromMedia(img);
 			const displaySize = { width: img.width, height: img.height }; 
